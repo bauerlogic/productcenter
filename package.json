@@ -1,0 +1,15 @@
+{
+    "name": "productcenter",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Web-based YAML product editor",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "node --watch server.js"
+    },
+    "dependencies": {
+        "express": "^4.21.0",
+        "js-yaml": "^4.1.0",
+        "glob": "^10.3.0"
+    }
+}

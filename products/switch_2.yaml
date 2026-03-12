@@ -1,0 +1,16 @@
+product:
+  id: ''
+  name: ''
+  category: ''
+  manufacturer: ''
+  status: draft
+  general: {}
+  ports: []
+  network: {}
+  management: {}
+  security: {}
+  power: {}
+  physical: {}
+  environmental: {}
+  certifications: []
+  documents: []

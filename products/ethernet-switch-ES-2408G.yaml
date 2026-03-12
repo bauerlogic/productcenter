@@ -1,0 +1,117 @@
+# Product Data Template
+# This file serves as a template for defining technical product specifications.
+
+product:
+  id: "ES-2408G"
+  name: "Industrial Ethernet Switch 24-Port Gigabit"
+  category: "Ethernet Switches"
+  manufacturer: "Example Corp"
+  status: "active"  # active | discontinued | draft
+
+  general:
+    product_type: "Managed Industrial Ethernet Switch"
+    series: "ES-2400"
+    part_number: "ES-2408G-PoE"
+    ean: "4012345678901"
+    release_date: "2025-06-01"
+    warranty_years: 5
+
+  ports:
+    - type: "RJ45"
+      count: 24
+      speed: "10/100/1000 Mbps"
+      poe: true
+      poe_standard: "IEEE 802.3at (PoE+)"
+      max_poe_power_per_port_w: 30
+
+    - type: "SFP+"
+      count: 4
+      speed: "1/10 Gbps"
+      poe: false
+
+  network:
+    switching_capacity_gbps: 128
+    forwarding_rate_mpps: 95.2
+    mac_address_table: 16384
+    jumbo_frame_bytes: 9216
+    vlan_ids: 4094
+    protocols:
+      - "IEEE 802.1Q (VLAN Tagging)"
+      - "IEEE 802.1p (QoS)"
+      - "IEEE 802.3ad (Link Aggregation)"
+      - "IEEE 802.1w (RSTP)"
+      - "IEEE 802.1s (MSTP)"
+      - "IGMP Snooping v1/v2/v3"
+      - "DHCP Snooping"
+
+  management:
+    interfaces:
+      - "Web GUI (HTTPS)"
+      - "CLI (SSH, Telnet)"
+      - "SNMP v1/v2c/v3"
+      - "REST API"
+    protocols:
+      - "LLDP"
+      - "RMON"
+      - "Syslog"
+      - "NTP"
+    firmware_update: "Web GUI / TFTP / USB"
+
+  security:
+    features:
+      - "IEEE 802.1X Port Authentication"
+      - "Access Control Lists (ACL)"
+      - "Port Security (MAC limit)"
+      - "Storm Control"
+      - "DHCP Snooping"
+      - "ARP Inspection"
+    encryption: "TLS 1.2, SSH v2"
+
+  power:
+    input_voltage: "44–57 V DC"
+    redundant_power: true
+    max_power_consumption_w: 450
+    total_poe_budget_w: 370
+
+  physical:
+    dimensions_mm:
+      width: 440
+      height: 44
+      depth: 250
+    weight_kg: 3.2
+    mounting: "19\" Rack (1U) / DIN Rail"
+    material: "Aluminum housing"
+    protection_class: "IP30"
+
+  environmental:
+    operating_temperature_c:
+      min: -40
+      max: 75
+    storage_temperature_c:
+      min: -40
+      max: 85
+    humidity_percent:
+      min: 5
+      max: 95
+      condensing: false
+    vibration: "IEC 60068-2-6"
+    shock: "IEC 60068-2-27"
+
+  certifications:
+    - "CE"
+    - "FCC Class A"
+    - "UL 62368-1"
+    - "IEC 61850-3"
+    - "IEEE 1613"
+    - "EN 50121-4 (Railway)"
+
+  documents:
+    - type: "datasheet"
+      url: "/docs/ES-2408G-datasheet.pdf"
+      language: "de"
+    - type: "manual"
+      url: "/docs/ES-2408G-manual.pdf"
+      language: "de"
+    - type: "firmware"
+      url: "/firmware/ES-2408G-v2.1.0.bin"
+      version: "2.1.0"
