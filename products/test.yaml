@@ -1,0 +1,57 @@
+product:
+  id: ''
+  name: ''
+  category: Ethernet Switches
+  manufacturer: ''
+  status: draft
+  general:
+    product_type: Managed Industrial Ethernet Switch
+    series: ''
+    part_number: ''
+    ean: ''
+    release_date: ''
+    warranty_years: null
+  ports: []
+  network:
+    switching_capacity_gbps: null
+    forwarding_rate_mpps: null
+    mac_address_table: null
+    jumbo_frame_bytes: null
+    vlan_ids: null
+    protocols: []
+  management:
+    interfaces: []
+    protocols: []
+    firmware_update: ''
+  security:
+    features: []
+    encryption: ''
+  power:
+    input_voltage: ''
+    redundant_power: false
+    max_power_consumption_w: null
+    total_poe_budget_w: null
+  physical:
+    dimensions_mm:
+      width: null
+      height: null
+      depth: null
+    weight_kg: null
+    mounting: ''
+    material: ''
+    protection_class: ''
+  environmental:
+    operating_temperature_c:
+      min: null
+      max: null
+    storage_temperature_c:
+      min: null
+      max: null
+    humidity_percent:
+      min: null
+      max: null
+      condensing: false
+    vibration: ''
+    shock: ''
+  certifications: []
+  documents: []

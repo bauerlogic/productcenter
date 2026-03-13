@@ -7,6 +7,7 @@ const { glob } = require('glob');
 const app = express();
 const PORT = 3000;
 const PRODUCTS_DIR = path.join(__dirname, 'products');
+const TEMPLATES_DIR = path.join(__dirname, 'templates');
 
 app.use(express.json({ limit: '5mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -96,8 +97,87 @@ app.delete('/api/products/:filename', (req, res) => {
     }
 });
 
-// Ensure products directory exists
+// Ensure directories exist
 if (!fs.existsSync(PRODUCTS_DIR)) fs.mkdirSync(PRODUCTS_DIR, { recursive: true });
+if (!fs.existsSync(TEMPLATES_DIR)) fs.mkdirSync(TEMPLATES_DIR, { recursive: true });
+
+// ─── Template helpers ────────────────────────────────────────────────────────
+
+// Extract default values from a template schema (strip _meta fields)
+function extractDefaults(schema) {
+    if (schema === null || schema === undefined) return '';
+
+    // If it has _type, it's a leaf field definition
+    if (schema._type) {
+        if (schema._type === 'array') {
+            return [];
+        }
+        if (schema._type === 'string-array') {
+            return [];
+        }
+        if (schema._type === 'boolean') {
+            return schema._default !== undefined ? schema._default : false;
+        }
+        if (schema._type === 'number') {
+            return schema._default !== undefined ? schema._default : null;
+        }
+        if (schema._type === 'enum') {
+            return schema._default || '';
+        }
+        if (schema._type === 'date') {
+            return schema._default || '';
+        }
+        // string
+        return schema._default || '';
+    }
+
+    // Object: recurse into non-meta keys
+    const result = {};
+    for (const [key, val] of Object.entries(schema)) {
+        if (key.startsWith('_')) continue;
+        if (val !== null && typeof val === 'object') {
+            result[key] = extractDefaults(val);
+        } else {
+            result[key] = val;
+        }
+    }
+    return result;
+}
+
+// ─── Template API ────────────────────────────────────────────────────────────
+
+// List all templates
+app.get('/api/templates', async (req, res) => {
+    try {
+        const files = await glob('*.yaml', { cwd: TEMPLATES_DIR });
+        const templates = files.map(file => {
+            const content = fs.readFileSync(path.join(TEMPLATES_DIR, file), 'utf8');
+            const data = yaml.load(content);
+            return {
+                filename: file,
+                name: data?._template?.name || file,
+                description: data?._template?.description || '',
+                category: data?._template?.category || '',
+            };
+        });
+        res.json(templates);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Get a single template (full schema)
+app.get('/api/templates/:filename', (req, res) => {
+    try {
+        const filePath = path.join(TEMPLATES_DIR, req.params.filename);
+        if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'Template not found' });
+        const content = fs.readFileSync(filePath, 'utf8');
+        const data = yaml.load(content);
+        res.json({ schema: data, defaults: extractDefaults(data) });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`ProductCenter running at http://localhost:${PORT}`);

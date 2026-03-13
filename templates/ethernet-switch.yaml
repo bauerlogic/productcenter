@@ -1,0 +1,325 @@
+_template:
+  name: "Ethernet Switch"
+  description: "Template für managed/unmanaged Ethernet Switches"
+  version: 1
+  category: "Ethernet Switches"
+
+product:
+  id:
+    _type: string
+    _required: true
+    _label: "Produkt-ID"
+    _placeholder: "z.B. ES-2408G"
+
+  name:
+    _type: string
+    _required: true
+    _label: "Produktname"
+
+  category:
+    _type: string
+    _default: "Ethernet Switches"
+    _label: "Kategorie"
+
+  manufacturer:
+    _type: string
+    _required: true
+    _label: "Hersteller"
+
+  status:
+    _type: enum
+    _options:
+      - draft
+      - active
+      - discontinued
+    _default: "draft"
+    _label: "Produktstatus"
+
+  general:
+    _label: "Allgemein"
+    product_type:
+      _type: string
+      _default: "Managed Industrial Ethernet Switch"
+      _label: "Produkttyp"
+    series:
+      _type: string
+      _label: "Serie"
+    part_number:
+      _type: string
+      _required: true
+      _label: "Artikelnummer"
+    ean:
+      _type: string
+      _pattern: "^[0-9]{13}$"
+      _label: "EAN-13"
+      _placeholder: "13-stellige EAN"
+    release_date:
+      _type: date
+      _label: "Erscheinungsdatum"
+    warranty_years:
+      _type: number
+      _min: 0
+      _max: 10
+      _unit: "Jahre"
+      _label: "Garantie"
+
+  ports:
+    _type: array
+    _label: "Ports"
+    _item:
+      type:
+        _type: enum
+        _options:
+          - RJ45
+          - SFP
+          - "SFP+"
+          - "QSFP+"
+          - QSFP28
+          - Console
+        _required: true
+        _label: "Port-Typ"
+      count:
+        _type: number
+        _min: 1
+        _required: true
+        _label: "Anzahl"
+      speed:
+        _type: string
+        _placeholder: "z.B. 10/100/1000 Mbps"
+        _label: "Geschwindigkeit"
+      poe:
+        _type: boolean
+        _default: false
+        _label: "PoE"
+      poe_standard:
+        _type: enum
+        _options:
+          - "IEEE 802.3af (PoE)"
+          - "IEEE 802.3at (PoE+)"
+          - "IEEE 802.3bt (PoE++)"
+        _label: "PoE-Standard"
+        _visible_if:
+          field: poe
+          value: true
+      max_poe_power_per_port_w:
+        _type: number
+        _unit: "W"
+        _label: "Max. PoE-Leistung/Port"
+        _visible_if:
+          field: poe
+          value: true
+
+  network:
+    _label: "Netzwerk"
+    switching_capacity_gbps:
+      _type: number
+      _unit: "Gbps"
+      _label: "Switching Capacity"
+    forwarding_rate_mpps:
+      _type: number
+      _unit: "Mpps"
+      _label: "Forwarding Rate"
+    mac_address_table:
+      _type: number
+      _label: "MAC Address Table"
+    jumbo_frame_bytes:
+      _type: number
+      _unit: "Bytes"
+      _label: "Jumbo Frame"
+    vlan_ids:
+      _type: number
+      _max: 4094
+      _label: "VLAN IDs"
+    protocols:
+      _type: string-array
+      _label: "Protokolle"
+      _suggestions:
+        - "IEEE 802.1Q (VLAN Tagging)"
+        - "IEEE 802.1p (QoS)"
+        - "IEEE 802.3ad (Link Aggregation)"
+        - "IEEE 802.1w (RSTP)"
+        - "IEEE 802.1s (MSTP)"
+        - "IGMP Snooping v1/v2/v3"
+        - "DHCP Snooping"
+
+  management:
+    _label: "Management"
+    interfaces:
+      _type: string-array
+      _label: "Schnittstellen"
+      _suggestions:
+        - "Web GUI (HTTPS)"
+        - "CLI (SSH, Telnet)"
+        - "SNMP v1/v2c/v3"
+        - "REST API"
+    protocols:
+      _type: string-array
+      _label: "Protokolle"
+      _suggestions:
+        - "LLDP"
+        - "RMON"
+        - "Syslog"
+        - "NTP"
+    firmware_update:
+      _type: string
+      _label: "Firmware-Update"
+      _placeholder: "z.B. Web GUI / TFTP / USB"
+
+  security:
+    _label: "Sicherheit"
+    features:
+      _type: string-array
+      _label: "Features"
+      _suggestions:
+        - "IEEE 802.1X Port Authentication"
+        - "Access Control Lists (ACL)"
+        - "Port Security (MAC limit)"
+        - "Storm Control"
+        - "DHCP Snooping"
+        - "ARP Inspection"
+    encryption:
+      _type: string
+      _label: "Verschlüsselung"
+      _placeholder: "z.B. TLS 1.2, SSH v2"
+
+  power:
+    _label: "Stromversorgung"
+    input_voltage:
+      _type: string
+      _label: "Eingangsspannung"
+      _placeholder: "z.B. 44–57 V DC"
+    redundant_power:
+      _type: boolean
+      _default: false
+      _label: "Redundante Stromversorgung"
+    max_power_consumption_w:
+      _type: number
+      _unit: "W"
+      _label: "Max. Leistungsaufnahme"
+    total_poe_budget_w:
+      _type: number
+      _unit: "W"
+      _label: "Gesamtes PoE-Budget"
+
+  physical:
+    _label: "Physikalisch"
+    dimensions_mm:
+      _label: "Abmessungen"
+      width:
+        _type: number
+        _unit: "mm"
+        _label: "Breite"
+      height:
+        _type: number
+        _unit: "mm"
+        _label: "Höhe"
+      depth:
+        _type: number
+        _unit: "mm"
+        _label: "Tiefe"
+    weight_kg:
+      _type: number
+      _unit: "kg"
+      _label: "Gewicht"
+    mounting:
+      _type: string
+      _label: "Einbau"
+      _placeholder: "z.B. 19\" Rack (1U) / DIN Rail"
+    material:
+      _type: string
+      _label: "Material"
+    protection_class:
+      _type: enum
+      _options:
+        - IP20
+        - IP30
+        - IP40
+        - IP54
+        - IP67
+      _label: "Schutzklasse"
+
+  environmental:
+    _label: "Umgebungsbedingungen"
+    operating_temperature_c:
+      _label: "Betriebstemperatur"
+      min:
+        _type: number
+        _unit: "°C"
+        _label: "Min"
+      max:
+        _type: number
+        _unit: "°C"
+        _label: "Max"
+    storage_temperature_c:
+      _label: "Lagertemperatur"
+      min:
+        _type: number
+        _unit: "°C"
+        _label: "Min"
+      max:
+        _type: number
+        _unit: "°C"
+        _label: "Max"
+    humidity_percent:
+      _label: "Luftfeuchtigkeit"
+      min:
+        _type: number
+        _unit: "%"
+        _label: "Min"
+      max:
+        _type: number
+        _unit: "%"
+        _label: "Max"
+      condensing:
+        _type: boolean
+        _default: false
+        _label: "Kondensierend"
+    vibration:
+      _type: string
+      _label: "Vibration"
+      _placeholder: "z.B. IEC 60068-2-6"
+    shock:
+      _type: string
+      _label: "Schock"
+      _placeholder: "z.B. IEC 60068-2-27"
+
+  certifications:
+    _type: string-array
+    _label: "Zertifizierungen"
+    _suggestions:
+      - "CE"
+      - "FCC Class A"
+      - "UL 62368-1"
+      - "IEC 61850-3"
+      - "IEEE 1613"
+      - "EN 50121-4 (Railway)"
+
+  documents:
+    _type: array
+    _label: "Dokumente"
+    _item:
+      type:
+        _type: enum
+        _options:
+          - datasheet
+          - manual
+          - firmware
+          - certificate
+          - drawing
+        _label: "Dokumenttyp"
+      url:
+        _type: string
+        _label: "URL / Pfad"
+      language:
+        _type: enum
+        _options:
+          - de
+          - en
+          - fr
+          - es
+          - it
+        _default: "de"
+        _label: "Sprache"
+      version:
+        _type: string
+        _label: "Version"

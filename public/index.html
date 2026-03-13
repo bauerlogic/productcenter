@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProductCenter – YAML Editor</title>
+    <title>ProductCenter – YAML Editor (Build 10)</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -12,6 +12,7 @@
     <header>
         <h1>ProductCenter</h1>
         <span class="subtitle">YAML Product Editor</span>
+        <span class="build-number">Build 10</span>
     </header>
 
     <div class="layout">
@@ -60,6 +61,8 @@
     <div id="modal-overlay" class="hidden">
         <div class="modal">
             <h3>New Product</h3>
+            <label>Template:</label>
+            <select id="template-select"></select>
             <label>Filename (without .yaml):</label>
             <input type="text" id="new-filename" placeholder="e.g. ethernet-switch-XY100">
             <div class="modal-actions">
