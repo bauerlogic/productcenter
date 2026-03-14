@@ -178,7 +178,52 @@ app.get('/api/templates/:filename', (req, res) => {
         if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'Template not found' });
         const content = fs.readFileSync(filePath, 'utf8');
         const data = yaml.load(content);
-        res.json({ schema: data, defaults: extractDefaults(data) });
+        res.json({ schema: data, defaults: extractDefaults(data), raw: content });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Save a template YAML
+app.put('/api/templates/:filename', (req, res) => {
+    try {
+        const filePath = path.join(TEMPLATES_DIR, req.params.filename);
+        if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'Template not found' });
+        const raw = req.body.raw;
+        if (!raw) return res.status(400).json({ error: 'Raw YAML content required' });
+        // Validate YAML
+        yaml.load(raw);
+        fs.writeFileSync(filePath, raw, 'utf8');
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Create a new template
+app.post('/api/templates', (req, res) => {
+    try {
+        const { filename, raw } = req.body;
+        if (!filename) return res.status(400).json({ error: 'Filename required' });
+        const safeName = filename.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
+        const fullName = safeName.endsWith('.yaml') ? safeName : `${safeName}.yaml`;
+        const filePath = path.join(TEMPLATES_DIR, fullName);
+        if (fs.existsSync(filePath)) return res.status(409).json({ error: 'Template already exists' });
+        const content = raw || `_template:\n  name: "${safeName}"\n  description: ""\n  version: 1\n  category: ""\n  author: ""\n  date: "${new Date().toISOString().slice(0, 10)}"\n  status: "draft"\n`;
+        fs.writeFileSync(filePath, content, 'utf8');
+        res.json({ success: true, filename: fullName });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Delete a template
+app.delete('/api/templates/:filename', (req, res) => {
+    try {
+        const filePath = path.join(TEMPLATES_DIR, req.params.filename);
+        if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'Template not found' });
+        fs.unlinkSync(filePath);
+        res.json({ success: true });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

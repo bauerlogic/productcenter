@@ -197,6 +197,46 @@ header .build-number {
     margin-top: 2px;
 }
 
+/* === Templates sidebar section === */
+.sidebar-header-templates {
+    border-top: 2px solid var(--sidebar-hover);
+}
+
+#template-list {
+    list-style: none;
+    overflow-y: auto;
+    padding: 8px;
+    max-height: 200px;
+}
+
+#template-list li {
+    padding: 10px 12px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: var(--font-base);
+    transition: background 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#template-list li:hover {
+    background: var(--sidebar-hover);
+}
+
+#template-list li.active {
+    background: var(--sidebar-active);
+    color: var(--white);
+    font-weight: 600;
+}
+
+#template-list li .file-id {
+    display: block;
+    font-size: var(--font-xs);
+    color: var(--sidebar-text);
+    margin-top: 2px;
+}
+
 /* === Main === */
 #editor-area {
     flex: 1;

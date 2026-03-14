@@ -4,6 +4,7 @@ let currentData = null;
 let currentTemplate = null; // the full template schema
 let templates = [];         // list of available templates
 let isYamlView = false;
+let editingTemplate = false; // true when editing a template file
 
 // ─── Utilities ───────────────────────────────────────────────────────────────
 function escapeHtml(str) {
@@ -31,6 +32,12 @@ const modalCreate = document.getElementById('modal-create');
 const modalCancel = document.getElementById('modal-cancel');
 const newFilenameInput = document.getElementById('new-filename');
 const templateSelect = document.getElementById('template-select');
+const templateListEl = document.getElementById('template-list');
+const btnNewTemplate = document.getElementById('btn-new-template');
+const modalOverlayTemplate = document.getElementById('modal-overlay-template');
+const modalTemplateCreate = document.getElementById('modal-template-create');
+const modalTemplateCancel = document.getElementById('modal-template-cancel');
+const newTemplateFilename = document.getElementById('new-template-filename');
 
 // ─── API helpers ─────────────────────────────────────────────────────────────
 async function api(url, options = {}) {
@@ -68,9 +75,23 @@ async function loadFileList() {
         const li = document.createElement('li');
         li.innerHTML = `${p.name}<span class="file-id">${p.filename}</span>`;
         li.dataset.filename = p.filename;
-        if (currentFile === p.filename) li.classList.add('active');
+        if (currentFile === p.filename && !editingTemplate) li.classList.add('active');
         li.onclick = () => loadProduct(p.filename);
         fileList.appendChild(li);
+    });
+}
+
+// ─── Load template list in sidebar ───────────────────────────────────────────
+async function loadTemplateListSidebar() {
+    const tpls = await api('/api/templates');
+    templateListEl.innerHTML = '';
+    tpls.forEach((t) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${t.name}<span class="file-id">${t.filename}</span>`;
+        li.dataset.filename = t.filename;
+        if (currentFile === t.filename && editingTemplate) li.classList.add('active');
+        li.onclick = () => loadTemplateForEdit(t.filename);
+        templateListEl.appendChild(li);
     });
 }
 
@@ -81,6 +102,9 @@ async function loadProduct(filename) {
 
     currentFile = filename;
     currentData = result.data;
+    editingTemplate = false;
+    btnToggle.disabled = false;
+    btnToggle.title = 'Switch between form and YAML view';
 
     // Try to find a matching template: prefer explicit _template field, fallback to category
     currentTemplate = null;
@@ -112,6 +136,40 @@ async function loadProduct(filename) {
 
     document.querySelectorAll('#file-list li').forEach((li) => {
         li.classList.toggle('active', li.dataset.filename === filename);
+    });
+    document.querySelectorAll('#template-list li').forEach((li) => {
+        li.classList.remove('active');
+    });
+}
+
+// ─── Load a template for editing ─────────────────────────────────────────────
+async function loadTemplateForEdit(filename) {
+    const result = await api(`/api/templates/${encodeURIComponent(filename)}`);
+    if (result.error) return showToast(result.error, 'error');
+
+    currentFile = filename;
+    currentData = null;
+    currentTemplate = null;
+    editingTemplate = true;
+
+    emptyState.classList.add('hidden');
+    editorArea.classList.remove('hidden');
+    editorTitle.textContent = '📄 Template: ' + (result.schema?._template?.name || filename);
+
+    // Templates always open in YAML view
+    isYamlView = true;
+    formView.classList.add('hidden');
+    yamlView.classList.remove('hidden');
+    btnToggle.textContent = 'Form View';
+    btnToggle.disabled = true;
+    btnToggle.title = 'Templates can only be edited as YAML';
+    yamlRaw.value = result.raw;
+
+    document.querySelectorAll('#template-list li').forEach((li) => {
+        li.classList.toggle('active', li.dataset.filename === filename);
+    });
+    document.querySelectorAll('#file-list li').forEach((li) => {
+        li.classList.remove('active');
     });
 }
 
@@ -817,6 +875,28 @@ function showAddPropertyModal(obj, path, parentSchema, redraw) {
 async function saveProduct() {
     if (!currentFile) return;
 
+    // Template save
+    if (editingTemplate) {
+        try {
+            jsYamlLiteParse(yamlRaw.value); // validate
+        } catch (e) {
+            return showToast('Invalid YAML: ' + e.message, 'error');
+        }
+        const result = await api(`/api/templates/${encodeURIComponent(currentFile)}`, {
+            method: 'PUT',
+            body: JSON.stringify({ raw: yamlRaw.value }),
+        });
+        if (result.success) {
+            showToast('Template saved!');
+            loadTemplates();
+            loadTemplateListSidebar();
+        } else {
+            showToast('Error: ' + result.error, 'error');
+        }
+        return;
+    }
+
+    // Product save
     let dataToSave;
     if (isYamlView) {
         try {
@@ -856,6 +936,27 @@ let jsYamlLiteParse = null;
 // ─── Delete ──────────────────────────────────────────────────────────────────
 async function deleteProduct() {
     if (!currentFile) return;
+
+    // Template delete
+    if (editingTemplate) {
+        if (!confirm(`Delete template "${currentFile}"? This cannot be undone.`)) return;
+        const result = await api(`/api/templates/${encodeURIComponent(currentFile)}`, { method: 'DELETE' });
+        if (result.success) {
+            showToast('Template deleted.');
+            currentFile = null;
+            editingTemplate = false;
+            editorArea.classList.add('hidden');
+            emptyState.classList.remove('hidden');
+            btnToggle.disabled = false;
+            loadTemplates();
+            loadTemplateListSidebar();
+        } else {
+            showToast('Error: ' + result.error, 'error');
+        }
+        return;
+    }
+
+    // Product delete
     if (!confirm(`Delete "${currentFile}"? This cannot be undone.`)) return;
 
     const result = await api(`/api/products/${encodeURIComponent(currentFile)}`, { method: 'DELETE' });
@@ -952,6 +1053,35 @@ modalCreate.onclick = createProduct;
 modalOverlay.onclick = (e) => { if (e.target === modalOverlay) hideModal(); };
 newFilenameInput.onkeydown = (e) => { if (e.key === 'Enter') createProduct(); };
 
+// Template modal
+btnNewTemplate.onclick = () => {
+    newTemplateFilename.value = '';
+    modalOverlayTemplate.classList.remove('hidden');
+    newTemplateFilename.focus();
+};
+modalTemplateCancel.onclick = () => modalOverlayTemplate.classList.add('hidden');
+modalOverlayTemplate.onclick = (e) => { if (e.target === modalOverlayTemplate) modalOverlayTemplate.classList.add('hidden'); };
+modalTemplateCreate.onclick = createTemplate;
+newTemplateFilename.onkeydown = (e) => { if (e.key === 'Enter') createTemplate(); };
+
+async function createTemplate() {
+    const filename = newTemplateFilename.value.trim();
+    if (!filename) return showToast('Please enter a filename', 'error');
+    const result = await api('/api/templates', {
+        method: 'POST',
+        body: JSON.stringify({ filename }),
+    });
+    if (result.success) {
+        modalOverlayTemplate.classList.add('hidden');
+        showToast('Template created!');
+        await loadTemplates();
+        await loadTemplateListSidebar();
+        loadTemplateForEdit(result.filename);
+    } else {
+        showToast(result.error, 'error');
+    }
+}
+
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 's') {
         e.preventDefault();
@@ -963,4 +1093,5 @@ document.addEventListener('keydown', (e) => {
 (async function init() {
     await loadTemplates();
     await loadFileList();
+    await loadTemplateListSidebar();
 })();
