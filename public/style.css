@@ -11,9 +11,9 @@
     /* Base */
     --bg: #f5f5f5;
     --white: #ffffff;
-    --text: #1e293b;
-    --text-muted: #64748b;
-    --text-subtle: #888888;
+    --text: #000000;
+    --text-muted: #000000;
+    --text-subtle: #000000;
     --border: #e2e8f0;
     --radius: 6px;
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -58,25 +58,23 @@
     --success: #22c55e;
     --card-bg: var(--white);
 
-    /* Hierarchy depth: Level 1 (top sections) */
-    --depth-1-bg: #c2c8d0;
-    --depth-1-border: #a0a8b4;
-    --depth-1-heading: #374151;
+    /* Hierarchy depth: Level 1 (base) */
+    --depth-1-bg: #9aa4b0;
+    --depth-1-border: #7a8694;
+    --depth-heading: #000000;
 
-    /* Hierarchy depth: Level 2 */
-    --depth-2-bg: #d6dce6;
-    --depth-2-border: #b0b8c6;
-    --depth-2-heading: #4b5563;
+    /* Hierarchy depth: derived from Level 1 */
+    --depth-2-bg: color-mix(in srgb, var(--depth-1-bg) 65%, var(--white));
+    --depth-2-border: color-mix(in srgb, var(--depth-1-border) 65%, var(--white));
 
-    /* Hierarchy depth: Level 3 */
-    --depth-3-bg: #e8ecf2;
-    --depth-3-border: #c4ccda;
-    --depth-3-heading: #6b7280;
+    --depth-3-bg: color-mix(in srgb, var(--depth-1-bg) 38%, var(--white));
+    --depth-3-border: color-mix(in srgb, var(--depth-1-border) 38%, var(--white));
 
-    /* Hierarchy depth: Level 4 */
-    --depth-4-bg: #f2f4f8;
-    --depth-4-border: #d8dde6;
-    --depth-4-heading: var(--gray-400);
+    --depth-4-bg: color-mix(in srgb, var(--depth-1-bg) 18%, var(--white));
+    --depth-4-border: color-mix(in srgb, var(--depth-1-border) 18%, var(--white));
+
+    --depth-5-bg: color-mix(in srgb, var(--depth-1-bg) 8%, var(--white));
+    --depth-5-border: color-mix(in srgb, var(--depth-1-border) 8%, var(--white));
 
     /* Hierarchy depth: Level 5+ */
     --depth-5-bg: #f9fafb;
@@ -309,10 +307,12 @@ button {
     line-height: 1;
     background: transparent;
     color: var(--text-muted);
+    opacity: 0.2;
 }
 
 .btn-icon:hover {
     color: var(--danger);
+    opacity: 1;
 }
 
 /* === Form === */
@@ -334,8 +334,6 @@ button {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
 }
 
 .section-header h3 {
@@ -343,7 +341,7 @@ button {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: var(--depth-1-heading);
+    color: var(--depth-heading);
 }
 
 /* === Hierarchy depth colors === */
@@ -377,17 +375,17 @@ button {
 
 /* Section header colors per depth */
 .form-section .nested-section>.section-header h3 {
-    color: var(--depth-2-heading);
+    color: var(--depth-heading);
     font-size: var(--font-base);
 }
 
 .form-section .nested-section .nested-section>.section-header h3 {
-    color: var(--depth-3-heading);
+    color: var(--depth-heading);
     font-size: var(--font-sm);
 }
 
 .form-section .nested-section .nested-section .nested-section>.section-header h3 {
-    color: var(--depth-4-heading);
+    color: var(--depth-heading);
     font-size: var(--font-sm);
 }
 
@@ -401,6 +399,11 @@ button {
     align-items: center;
     gap: 8px;
     margin-bottom: 8px;
+}
+
+.field-row+.nested-section,
+.nested-section+.field-row {
+    margin-top: 16px;
 }
 
 .field-row label {
@@ -568,11 +571,12 @@ button {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex: 1;
+    flex: 0 0 auto;
 }
 
 .toggle-checkbox {
     width: 40px;
+    min-width: 40px;
     height: 22px;
     appearance: none;
     background: var(--gray-300);
