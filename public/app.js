@@ -82,15 +82,20 @@ async function loadProduct(filename) {
     currentFile = filename;
     currentData = result.data;
 
-    // Try to find a matching template by category
+    // Try to find a matching template: prefer explicit _template field, fallback to category
     currentTemplate = null;
+    const explicitTpl = currentData?._template || '';
     const category = currentData?.product?.category || '';
-    if (category) {
-        const match = templates.find((t) => t.category === category);
-        if (match) {
-            const tplResult = await api(`/api/templates/${encodeURIComponent(match.filename)}`);
-            if (tplResult.schema) currentTemplate = tplResult.schema;
-        }
+    let matchedTemplate = null;
+    if (explicitTpl) {
+        matchedTemplate = templates.find((t) => t.filename === explicitTpl);
+    }
+    if (!matchedTemplate && category) {
+        matchedTemplate = templates.find((t) => t.category === category);
+    }
+    if (matchedTemplate) {
+        const tplResult = await api(`/api/templates/${encodeURIComponent(matchedTemplate.filename)}`);
+        if (tplResult.schema) currentTemplate = tplResult.schema;
     }
 
     emptyState.classList.add('hidden');
@@ -914,8 +919,9 @@ async function createProduct() {
         const tplResult = await api(`/api/templates/${encodeURIComponent(selectedTemplate)}`);
         if (tplResult.defaults) {
             data = tplResult.defaults;
+            data._template = selectedTemplate;
         } else {
-            data = { product: { id: '', name: '', category: '', status: 'draft' } };
+            data = { _template: selectedTemplate, product: { id: '', name: '', category: '', status: 'draft' } };
         }
     } else {
         data = { product: { id: '', name: '', category: '', manufacturer: '', status: 'draft' } };

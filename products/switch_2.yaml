@@ -1,9 +1,16 @@
+meta:
+  author: ""
+  version: "1.0"
+  date: ""
+  status: "draft"
+  template: ""
+
 product:
   id: ''
   name: ''
   category: ''
   manufacturer: ''
-  status: draft
+  status: 'planned'
   general: {}
   ports: []
   network: {}

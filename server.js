@@ -12,6 +12,11 @@ const TEMPLATES_DIR = path.join(__dirname, 'templates');
 app.use(express.json({ limit: '5mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Serve the table-based editor at /table
+app.get('/table', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index-table.html'));
+});
+
 // List all product YAML files
 app.get('/api/products', async (req, res) => {
     try {

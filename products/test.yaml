@@ -1,9 +1,16 @@
+meta:
+  author: ""
+  version: "1.0"
+  date: ""
+  status: "draft"
+  template: "ethernet-switch.yaml"
+
 product:
   id: ''
   name: ''
   category: Ethernet Switches
   manufacturer: ''
-  status: draft
+  status: 'planned'
   general:
     product_type: Managed Industrial Ethernet Switch
     series: ''

@@ -4,19 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProductCenter – YAML Editor (Build 19)</title>
-    <link rel="stylesheet" href="style.css">
+    <title>ProductCenter – Table View (Build 20)</title>
+    <link rel="stylesheet" href="style-table.css">
 </head>
 
 <body>
     <header>
         <h1>ProductCenter</h1>
         <span class="subtitle">YAML Product Editor</span>
-        <a href="/table"
-            style="margin-left:auto; color:#c7d2fe; text-decoration:none; font-size:0.85em; padding:4px 10px; border:1px solid #c7d2fe; border-radius:6px; transition:all .15s;"
-            onmouseover="this.style.background='rgba(59,130,246,0.15)';this.style.color='#fff'"
-            onmouseout="this.style.background='';this.style.color='#c7d2fe'">Table View</a>
-        <span class="build-number">Build 19</span>
+        <div class="header-right">
+            <a href="/" class="view-switch" title="Switch to classic stacked view">Classic View</a>
+            <span class="build-number">Build 20 – Table</span>
+        </div>
     </header>
 
     <div class="layout">
@@ -40,15 +39,18 @@
                     <h2 id="editor-title"></h2>
                     <div class="toolbar-actions">
                         <button id="btn-toggle-view" class="btn-secondary"
-                            title="Switch between form and YAML view">YAML View</button>
+                            title="Switch between table and YAML view">YAML View</button>
                         <button id="btn-save" class="btn-primary">Save</button>
                         <button id="btn-delete" class="btn-danger">Delete</button>
                     </div>
                 </div>
 
-                <!-- Form View -->
-                <div id="form-view">
-                    <div id="form-container"></div>
+                <!-- Table View -->
+                <div id="table-view">
+                    <div id="table-container"></div>
+                    <div class="table-footer-actions">
+                        <button id="btn-add-root" class="btn-secondary btn-small">+ Add Root Property</button>
+                    </div>
                 </div>
 
                 <!-- YAML Raw View -->
@@ -76,7 +78,7 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="app-table.js"></script>
 </body>
 
 </html>

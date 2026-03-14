@@ -1,15 +1,22 @@
+meta:
+  author: ""
+  version: "1.0"
+  date: ""
+  status: "draft"
+  template: "ethernet-switch.yaml"
+
 product:
-  id: ''
-  name: ''
+  id: ""
+  name: ""
   category: Ethernet Switches
-  manufacturer: ''
-  status: draft
+  manufacturer: ""
+  status: "planned"
   general:
     product_type: Managed Industrial Ethernet Switch
-    series: ''
-    part_number: ''
-    ean: ''
-    release_date: ''
+    series: ""
+    part_number: ""
+    ean: ""
+    release_date: ""
     warranty_years: null
   ports: []
   network:
@@ -20,14 +27,15 @@ product:
     vlan_ids: null
     protocols: []
   management:
-    interfaces: []
+    interfaces:
+      - ""
     protocols: []
-    firmware_update: ''
+    firmware_update: ""
   security:
     features: []
-    encryption: ''
+    encryption: ""
   power:
-    input_voltage: ''
+    input_voltage: ""
     redundant_power: false
     max_power_consumption_w: null
     total_poe_budget_w: null
@@ -37,9 +45,9 @@ product:
       height: null
       depth: null
     weight_kg: null
-    mounting: ''
-    material: ''
-    protection_class: ''
+    mounting: ""
+    material: ""
+    protection_class: ""
   environmental:
     operating_temperature_c:
       min: null
@@ -51,7 +59,7 @@ product:
       min: null
       max: null
       condensing: false
-    vibration: ''
-    shock: ''
+    vibration: ""
+    shock: ""
   certifications: []
   documents: []

@@ -3,6 +3,37 @@ _template:
   description: "Template für managed/unmanaged Ethernet Switches"
   version: 1
   category: "Ethernet Switches"
+  author: "bauerlogic"
+  date: "2026-03-14"
+  status: "active"
+  language: "de"
+
+meta:
+  _label: "Meta"
+  author:
+    _type: string
+    _label: "Autor"
+    _placeholder: "z.B. Max Mustermann"
+  version:
+    _type: string
+    _default: "1.0"
+    _label: "Version"
+  date:
+    _type: date
+    _label: "Datum"
+  status:
+    _type: enum
+    _options:
+      - draft
+      - review
+      - released
+      - archived
+    _default: "draft"
+    _label: "Dokumentstatus"
+  template:
+    _type: string
+    _label: "Template"
+    _placeholder: "z.B. ethernet-switch.yaml"
 
 product:
   id:
@@ -29,10 +60,12 @@ product:
   status:
     _type: enum
     _options:
-      - draft
-      - active
-      - discontinued
-    _default: "draft"
+      - planned
+      - in development
+      - in production
+      - end-of-production
+      - end-of-life
+    _default: "planned"
     _label: "Produktstatus"
 
   general:

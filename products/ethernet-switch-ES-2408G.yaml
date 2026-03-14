@@ -1,12 +1,19 @@
-# Product Data Template
-# This file serves as a template for defining technical product specifications.
+# Product Data
+# Technical product specifications.
+
+meta:
+  author: ""
+  version: "1.0"
+  date: "2025-06-01"
+  status: "released"
+  template: "ethernet-switch.yaml"
 
 product:
   id: "ES-2408G"
   name: "Industrial Ethernet Switch 24-Port Gigabit"
   category: "Ethernet Switches"
   manufacturer: "Example Corp"
-  status: "active"  # active | discontinued | draft
+  status: "in production"
 
   general:
     product_type: "Managed Industrial Ethernet Switch"
