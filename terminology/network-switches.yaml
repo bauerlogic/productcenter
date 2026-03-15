@@ -1,0 +1,640 @@
+_meta:
+  name: Terminologie Netzwerk-Switches & Glasfaser
+  version: "1.0"
+  date: "2026-03-15"
+  source_lang: de
+  target_lang: en
+  status: active
+product_categories:
+  - source_term: Ethernet-Switch
+    target_term: Ethernet Switch
+    domain: networking
+    do_not_translate: false
+  - source_term: Industrial Ethernet Switch
+    target_term: Industrial Ethernet Switch
+    domain: networking
+    do_not_translate: true
+  - source_term: Unmanaged Switch
+    target_term: Unmanaged Switch
+    domain: networking
+    do_not_translate: true
+  - source_term: Layer-2-Switch
+    target_term: Layer 2 Switch
+    domain: networking
+    do_not_translate: false
+  - source_term: Layer-3-Switch
+    target_term: Layer 3 Switch
+    domain: networking
+    do_not_translate: false
+  - source_term: PoE-Switch
+    target_term: PoE Switch
+    domain: networking
+    do_not_translate: false
+  - source_term: Medienkonverter
+    target_term: Media Converter
+    domain: networking
+    do_not_translate: false
+  - source_term: Micro Switch
+    target_term: Micro Switch
+    domain: networking
+    do_not_translate: true
+  - source_term: Desktop Switch
+    target_term: Desktop Switch
+    domain: networking
+    do_not_translate: true
+ports:
+  - source_term: Anschluss
+    target_term: Port
+    domain: networking
+    do_not_translate: false
+  - source_term: Port-Typ
+    target_term: Port Type
+    domain: networking
+    do_not_translate: false
+  - source_term: Anzahl Ports
+    target_term: Number of Ports
+    domain: networking
+    do_not_translate: false
+  - source_term: Geschwindigkeit
+    target_term: Speed
+    domain: networking
+    do_not_translate: false
+  - source_term: Uplink-Port
+    target_term: Uplink Port
+    domain: networking
+    do_not_translate: false
+  - source_term: Konsolenport
+    target_term: Console Port
+    domain: networking
+    do_not_translate: false
+  - source_term: Combo-Port
+    target_term: Combo Port
+    domain: networking
+    do_not_translate: false
+    context: Port, der wahlweise als RJ45 oder SFP genutzt werden kann
+  - source_term: RJ45
+    target_term: RJ45
+    domain: networking
+    do_not_translate: true
+fiber_optic:
+  - source_term: Glasfaser
+    target_term: fiber optic
+    domain: fiber
+    do_not_translate: false
+  - source_term: Lichtwellenleiter
+    target_term: optical fiber
+    domain: fiber
+    do_not_translate: false
+    notes: Abkürzung LWL beibehalten wenn im Quelltext verwendet
+  - source_term: LWL
+    target_term: fiber optic
+    domain: fiber
+    do_not_translate: false
+    context: Abkürzung für Lichtwellenleiter
+  - source_term: Singlemode-Faser
+    target_term: single-mode fiber
+    domain: fiber
+    do_not_translate: false
+  - source_term: Multimode-Faser
+    target_term: multi-mode fiber
+    domain: fiber
+    do_not_translate: false
+  - source_term: SFP
+    target_term: SFP
+    domain: fiber
+    do_not_translate: true
+    notes: Small Form-factor Pluggable
+  - source_term: SFP+
+    target_term: SFP+
+    domain: fiber
+    do_not_translate: true
+    notes: Enhanced SFP, bis 10 Gbps
+  - source_term: QSFP+
+    target_term: QSFP+
+    domain: fiber
+    do_not_translate: true
+    notes: Quad SFP+, bis 40 Gbps
+  - source_term: QSFP28
+    target_term: QSFP28
+    domain: fiber
+    do_not_translate: true
+    notes: Quad SFP28, bis 100 Gbps
+  - source_term: QSFP-DD
+    target_term: QSFP-DD
+    domain: fiber
+    do_not_translate: true
+    notes: QSFP Double Density, bis 400 Gbps
+  - source_term: Transceiver
+    target_term: transceiver
+    domain: fiber
+    do_not_translate: false
+  - source_term: optisches Modul
+    target_term: optical transceiver module
+    domain: fiber
+    do_not_translate: false
+  - source_term: Reichweite
+    target_term: reach
+    domain: fiber
+    do_not_translate: false
+    context: Übertragungsreichweite bei Glasfaser
+  - source_term: Dämpfung
+    target_term: attenuation
+    domain: fiber
+    do_not_translate: false
+  - source_term: Wellenlänge
+    target_term: wavelength
+    domain: fiber
+    do_not_translate: false
+  - source_term: Einfügedämpfung
+    target_term: insertion loss
+    domain: fiber
+    do_not_translate: false
+  - source_term: Rückflussdämpfung
+    target_term: return loss
+    domain: fiber
+    do_not_translate: false
+  - source_term: Sendeleistung
+    target_term: transmit power
+    domain: fiber
+    do_not_translate: false
+  - source_term: Empfangsempfindlichkeit
+    target_term: receiver sensitivity
+    domain: fiber
+    do_not_translate: false
+  - source_term: Sättigungsleistung
+    target_term: overload power
+    domain: fiber
+    do_not_translate: false
+  - source_term: LC-Stecker
+    target_term: LC connector
+    domain: fiber
+    do_not_translate: false
+  - source_term: SC-Stecker
+    target_term: SC connector
+    domain: fiber
+    do_not_translate: false
+  - source_term: ST-Stecker
+    target_term: ST connector
+    domain: fiber
+    do_not_translate: false
+  - source_term: MPO/MTP-Stecker
+    target_term: MPO/MTP connector
+    domain: fiber
+    do_not_translate: false
+  - source_term: Duplex
+    target_term: duplex
+    domain: fiber
+    do_not_translate: false
+  - source_term: Simplex
+    target_term: simplex
+    domain: fiber
+    do_not_translate: false
+  - source_term: BiDi
+    target_term: BiDi
+    domain: fiber
+    do_not_translate: true
+    notes: Bidirektionale Übertragung auf einer Faser
+  - source_term: WDM
+    target_term: WDM
+    domain: fiber
+    do_not_translate: true
+    notes: Wavelength Division Multiplexing
+  - source_term: CWDM
+    target_term: CWDM
+    domain: fiber
+    do_not_translate: true
+    notes: Coarse Wavelength Division Multiplexing
+  - source_term: DWDM
+    target_term: DWDM
+    domain: fiber
+    do_not_translate: true
+    notes: Dense Wavelength Division Multiplexing
+  - source_term: Patchkabel
+    target_term: Patch Cable
+    domain: fiber
+    do_not_translate: false
+  - source_term: Pigtail
+    target_term: Pigtail
+    domain: fiber
+    do_not_translate: true
+  - source_term: Spleißung
+    target_term: splice
+    domain: fiber
+    do_not_translate: false
+  - source_term: Fusionsspleißung
+    target_term: fusion splice
+    domain: fiber
+    do_not_translate: false
+  - source_term: optisches Leistungsbudget
+    target_term: optical link budget
+    domain: fiber
+    do_not_translate: false
+  - source_term: ""
+    target_term: ""
+    do_not_translate: false
+network:
+  - source_term: Switching-Kapazität
+    target_term: switching capacity
+    domain: networking
+    do_not_translate: false
+  - source_term: Weiterleitungsrate
+    target_term: forwarding rate
+    domain: networking
+    do_not_translate: false
+  - source_term: MAC-Tabelle
+    target_term: MAC table
+    domain: networking
+    do_not_translate: false
+  - source_term: Jumbo Frame
+    target_term: jumbo frame
+    domain: networking
+    do_not_translate: true
+  - source_term: Vollduplex
+    target_term: full duplex
+    domain: networking
+    do_not_translate: false
+  - source_term: Halbduplex
+    target_term: half duplex
+    domain: networking
+    do_not_translate: false
+  - source_term: Latenz
+    target_term: latency
+    domain: networking
+    do_not_translate: false
+  - source_term: Durchsatz
+    target_term: throughput
+    domain: networking
+    do_not_translate: false
+  - source_term: Bandbreite
+    target_term: dandwidth
+    domain: networking
+    do_not_translate: false
+  - source_term: Auto-Negotiation
+    target_term: Auto-Negotiation
+    domain: networking
+    do_not_translate: true
+  - source_term: Store-and-Forward
+    target_term: Store-and-Forward
+    domain: networking
+    do_not_translate: true
+  - source_term: Cut-Through
+    target_term: Cut-Through
+    domain: networking
+    do_not_translate: true
+  - source_term: Optischer Transceiver
+    target_term: optical tranceiver
+    domain: networking
+    do_not_translate: false
+protocols:
+  - source_term: VLAN-Tagging
+    target_term: VLAN Tagging
+    domain: networking
+    do_not_translate: false
+    notes: IEEE 802.1Q
+  - source_term: Dienstgüte
+    target_term: Quality of Service (QoS)
+    domain: networking
+    do_not_translate: false
+    notes: IEEE 802.1p
+  - source_term: Linkbündelung
+    target_term: Link Aggregation (LAG)
+    domain: networking
+    do_not_translate: false
+    notes: IEEE 802.3ad / 802.1ax
+  - source_term: Spanning Tree
+    target_term: Spanning Tree
+    domain: networking
+    do_not_translate: true
+  - source_term: Rapid Spanning Tree
+    target_term: Rapid Spanning Tree Protocol (RSTP)
+    domain: networking
+    do_not_translate: false
+    notes: IEEE 802.1w
+  - source_term: Ringtopologie
+    target_term: Ring Topology
+    domain: networking
+    do_not_translate: false
+  - source_term: Ringredundanz
+    target_term: Ring Redundancy
+    domain: networking
+    do_not_translate: false
+  - source_term: Medienredundanz
+    target_term: Media Redundancy
+    domain: networking
+    do_not_translate: false
+    notes: z.B. MRP nach IEC 62439-2
+  - source_term: IEEE 802.1X
+    target_term: IEEE 802.1X
+    domain: security
+    do_not_translate: true
+    notes: Port-basierte Netzwerkzugangskontrolle
+  - source_term: IGMP Snooping
+    target_term: IGMP Snooping
+    domain: networking
+    do_not_translate: true
+  - source_term: DHCP Snooping
+    target_term: DHCP Snooping
+    domain: security
+    do_not_translate: true
+  - source_term: LLDP
+    target_term: LLDP
+    domain: networking
+    do_not_translate: true
+    notes: Link Layer Discovery Protocol
+  - source_term: SNMP
+    target_term: SNMP
+    domain: management
+    do_not_translate: true
+    notes: Simple Network Management Protocol
+  - source_term: PROFINET
+    target_term: PROFINET
+    domain: industrial
+    do_not_translate: true
+  - source_term: EtherNet/IP
+    target_term: EtherNet/IP
+    domain: industrial
+    do_not_translate: true
+  - source_term: EtherCAT
+    target_term: EtherCAT
+    domain: industrial
+    do_not_translate: true
+  - source_term: Modbus TCP
+    target_term: Modbus TCP
+    domain: industrial
+    do_not_translate: true
+  - source_term: TSN
+    target_term: TSN
+    domain: networking
+    do_not_translate: true
+    notes: Time-Sensitive Networking, IEEE 802.1 TSN
+speeds:
+  - source_term: Fast Ethernet
+    target_term: Fast Ethernet
+    domain: networking
+    do_not_translate: true
+    notes: 100 Mbit/s
+  - source_term: Gigabit Ethernet
+    target_term: Gigabit Ethernet
+    domain: networking
+    do_not_translate: true
+    notes: 1 Gbit/s
+  - source_term: 10-Gigabit Ethernet
+    target_term: 10 Gigabit Ethernet
+    domain: networking
+    do_not_translate: false
+    notes: 10 Gbit/s
+  - source_term: Multigig
+    target_term: MultiGig
+    domain: networking
+    do_not_translate: false
+    notes: 2.5G / 5G / 10G Base-T
+  - source_term: 25-Gigabit Ethernet
+    target_term: 25 Gigabit Ethernet
+    domain: networking
+    do_not_translate: false
+  - source_term: 40-Gigabit Ethernet
+    target_term: 40 Gigabit Ethernet
+    domain: networking
+    do_not_translate: false
+  - source_term: 100-Gigabit Ethernet
+    target_term: 100 Gigabit Ethernet
+    domain: networking
+    do_not_translate: false
+management:
+  - source_term: Web-Oberfläche
+    target_term: Web GUI
+    domain: management
+    do_not_translate: false
+  - source_term: Kommandozeile
+    target_term: Command Line Interface (CLI)
+    domain: management
+    do_not_translate: false
+  - source_term: Firmware-Update
+    target_term: Firmware Update
+    domain: management
+    do_not_translate: false
+  - source_term: Konfigurationsdatei
+    target_term: Configuration File
+    domain: management
+    do_not_translate: false
+  - source_term: Werkseinstellungen
+    target_term: Factory Defaults
+    domain: management
+    do_not_translate: false
+  - source_term: Portspiegelung
+    target_term: Port Mirroring
+    domain: management
+    do_not_translate: false
+  - source_term: Zugriffskontrolllisten
+    target_term: Access Control Lists (ACL)
+    domain: security
+    do_not_translate: false
+  - source_term: Portsicherheit
+    target_term: Port Security
+    domain: security
+    do_not_translate: false
+  - source_term: Sturmkontrolle
+    target_term: Storm Control
+    domain: security
+    do_not_translate: false
+  - source_term: Verschlüsselung
+    target_term: Encryption
+    domain: security
+    do_not_translate: false
+power:
+  - source_term: Betriebsspannung
+    target_term: Operating Voltage
+    domain: power
+    do_not_translate: false
+  - source_term: Eingangsspannung
+    target_term: Input Voltage
+    domain: power
+    do_not_translate: false
+  - source_term: Leistungsaufnahme
+    target_term: Power Consumption
+    domain: power
+    do_not_translate: false
+  - source_term: Redundante Stromversorgung
+    target_term: Redundant Power Supply
+    domain: power
+    do_not_translate: false
+  - source_term: PoE-Budget
+    target_term: PoE Power Budget
+    domain: power
+    do_not_translate: false
+  - source_term: PoE
+    target_term: PoE
+    domain: power
+    do_not_translate: true
+    notes: Power over Ethernet, IEEE 802.3af
+  - source_term: PoE+
+    target_term: PoE+
+    domain: power
+    do_not_translate: true
+    notes: IEEE 802.3at, bis 30 W
+  - source_term: PoE++
+    target_term: PoE++
+    domain: power
+    do_not_translate: true
+    notes: IEEE 802.3bt, bis 60 W / 90 W
+  - source_term: Hutschienenmontage
+    target_term: DIN Rail Mounting
+    domain: mechanical
+    do_not_translate: false
+  - source_term: Wandmontage
+    target_term: Wall Mounting
+    domain: mechanical
+    do_not_translate: false
+  - source_term: 19-Zoll-Rackmontage
+    target_term: "19"
+    domain: mechanical
+    do_not_translate: false
+physical:
+  - source_term: Abmessungen
+    target_term: Dimensions
+    domain: physical
+    do_not_translate: false
+  - source_term: Breite
+    target_term: Width
+    domain: physical
+    do_not_translate: false
+  - source_term: Höhe
+    target_term: Height
+    domain: physical
+    do_not_translate: false
+  - source_term: Tiefe
+    target_term: Depth
+    domain: physical
+    do_not_translate: false
+  - source_term: Gewicht
+    target_term: Weight
+    domain: physical
+    do_not_translate: false
+  - source_term: Schutzart
+    target_term: Protection Rating
+    domain: physical
+    do_not_translate: false
+  - source_term: Schutzklasse
+    target_term: Protection Class
+    domain: physical
+    do_not_translate: false
+  - source_term: Betriebstemperatur
+    target_term: Operating Temperature
+    domain: environmental
+    do_not_translate: false
+  - source_term: Lagertemperatur
+    target_term: Storage Temperature
+    domain: environmental
+    do_not_translate: false
+  - source_term: Luftfeuchtigkeit
+    target_term: Humidity
+    domain: environmental
+    do_not_translate: false
+  - source_term: nicht kondensierend
+    target_term: non-condensing
+    domain: environmental
+    do_not_translate: false
+  - source_term: Vibrationsfestigkeit
+    target_term: Vibration Resistance
+    domain: environmental
+    do_not_translate: false
+  - source_term: Schockfestigkeit
+    target_term: Shock Resistance
+    domain: environmental
+    do_not_translate: false
+  - source_term: MTBF
+    target_term: MTBF
+    domain: reliability
+    do_not_translate: true
+    notes: Mean Time Between Failures
+certifications:
+  - source_term: CE
+    target_term: CE
+    do_not_translate: true
+  - source_term: UL
+    target_term: UL
+    do_not_translate: true
+  - source_term: FCC
+    target_term: FCC
+    do_not_translate: true
+  - source_term: IEC 61850-3
+    target_term: IEC 61850-3
+    do_not_translate: true
+    notes: Energieversorgungsnetz / Power utility
+  - source_term: IEEE 1613
+    target_term: IEEE 1613
+    do_not_translate: true
+    notes: Umspannwerke / Substations
+  - source_term: EN 50121-4
+    target_term: EN 50121-4
+    do_not_translate: true
+    notes: Eisenbahnanwendungen / Railway
+  - source_term: NEMA TS2
+    target_term: NEMA TS2
+    do_not_translate: true
+    notes: Verkehrstechnik / Traffic control
+  - source_term: ATEX
+    target_term: ATEX
+    do_not_translate: true
+    notes: Explosionsschutz / Explosion protection
+documents:
+  - source_term: Datenblatt
+    target_term: Datasheet
+    domain: documentation
+    do_not_translate: false
+  - source_term: Handbuch
+    target_term: Manual
+    domain: documentation
+    do_not_translate: false
+  - source_term: Installationsanleitung
+    target_term: Installation Guide
+    domain: documentation
+    do_not_translate: false
+  - source_term: Schnellstartanleitung
+    target_term: Quick Start Guide
+    domain: documentation
+    do_not_translate: false
+  - source_term: Konformitätserklärung
+    target_term: Declaration of Conformity
+    domain: documentation
+    do_not_translate: false
+  - source_term: Technische Zeichnung
+    target_term: Technical Drawing
+    domain: documentation
+    do_not_translate: false
+  - source_term: Versionshinweise
+    target_term: Release Notes
+    domain: documentation
+    do_not_translate: false
+units:
+  - source_term: Gbps
+    target_term: Gbps
+    do_not_translate: true
+  - source_term: Mpps
+    target_term: Mpps
+    do_not_translate: true
+    notes: Million packets per second
+  - source_term: dBm
+    target_term: dBm
+    do_not_translate: true
+  - source_term: nm
+    target_term: nm
+    do_not_translate: true
+    notes: Nanometer – Wellenlänge bei Glasfaser
+  - source_term: µm
+    target_term: µm
+    do_not_translate: true
+    notes: Mikrometer – Faserkern-Durchmesser (z.B. 9/125 µm, 50/125 µm)
+  - source_term: km
+    target_term: km
+    do_not_translate: true
+    notes: Reichweite bei Glasfaser
+  - source_term: W
+    target_term: W
+    do_not_translate: true
+  - source_term: V DC
+    target_term: V DC
+    do_not_translate: true
+  - source_term: V AC
+    target_term: V AC
+    do_not_translate: true

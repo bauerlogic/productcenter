@@ -8,6 +8,7 @@ const app = express();
 const PORT = 3000;
 const PRODUCTS_DIR = path.join(__dirname, 'products');
 const TEMPLATES_DIR = path.join(__dirname, 'templates');
+const TERMINOLOGY_DIR = path.join(__dirname, 'terminology');
 
 app.use(express.json({ limit: '5mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -15,6 +16,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Serve the table-based editor at /table
 app.get('/table', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index-table.html'));
+});
+
+// Serve the terminology editor at /terminology
+app.get('/terminology', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index-terminology.html'));
 });
 
 // List all product YAML files
@@ -105,6 +111,7 @@ app.delete('/api/products/:filename', (req, res) => {
 // Ensure directories exist
 if (!fs.existsSync(PRODUCTS_DIR)) fs.mkdirSync(PRODUCTS_DIR, { recursive: true });
 if (!fs.existsSync(TEMPLATES_DIR)) fs.mkdirSync(TEMPLATES_DIR, { recursive: true });
+if (!fs.existsSync(TERMINOLOGY_DIR)) fs.mkdirSync(TERMINOLOGY_DIR, { recursive: true });
 
 // ─── Template helpers ────────────────────────────────────────────────────────
 
@@ -222,6 +229,121 @@ app.delete('/api/templates/:filename', (req, res) => {
     try {
         const filePath = path.join(TEMPLATES_DIR, req.params.filename);
         if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'Template not found' });
+        fs.unlinkSync(filePath);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// ─── Terminology API ─────────────────────────────────────────────────────────
+
+// List all terminology files
+app.get('/api/terminology', async (req, res) => {
+    try {
+        const files = await glob('*.yaml', { cwd: TERMINOLOGY_DIR });
+        const items = files.map(file => {
+            const content = fs.readFileSync(path.join(TERMINOLOGY_DIR, file), 'utf8');
+            const data = yaml.load(content);
+            return {
+                filename: file,
+                name: data?._meta?.name || file,
+                source_lang: data?._meta?.source_lang || '',
+                target_lang: data?._meta?.target_lang || '',
+                status: data?._meta?.status || '',
+            };
+        });
+        res.json(items);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Load a single terminology file
+app.get('/api/terminology/:filename', (req, res) => {
+    try {
+        const filePath = path.join(TERMINOLOGY_DIR, req.params.filename);
+        if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'File not found' });
+        const content = fs.readFileSync(filePath, 'utf8');
+        const data = yaml.load(content);
+        res.json({ data, raw: content });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Save a terminology file
+app.put('/api/terminology/:filename', (req, res) => {
+    try {
+        const filePath = path.join(TERMINOLOGY_DIR, req.params.filename);
+        const yamlStr = yaml.dump(req.body.data, {
+            indent: 2,
+            lineWidth: 120,
+            noRefs: true,
+            sortKeys: false,
+            quotingType: '"',
+            forceQuotes: false,
+        });
+        fs.writeFileSync(filePath, yamlStr, 'utf8');
+        res.json({ success: true, raw: yamlStr });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Save a terminology file as raw YAML
+app.put('/api/terminology/:filename/raw', (req, res) => {
+    try {
+        const filePath = path.join(TERMINOLOGY_DIR, req.params.filename);
+        const raw = req.body.raw;
+        if (!raw) return res.status(400).json({ error: 'Raw YAML content required' });
+        // Validate YAML
+        yaml.load(raw);
+        fs.writeFileSync(filePath, raw, 'utf8');
+        res.json({ success: true, raw });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Create a new terminology file
+app.post('/api/terminology', (req, res) => {
+    try {
+        const { filename, data } = req.body;
+        if (!filename) return res.status(400).json({ error: 'Filename required' });
+        const safeName = filename.replace(/[^a-zA-Z0-9_\-\.]/g, '_');
+        const fullName = safeName.endsWith('.yaml') ? safeName : `${safeName}.yaml`;
+        const filePath = path.join(TERMINOLOGY_DIR, fullName);
+        if (fs.existsSync(filePath)) return res.status(409).json({ error: 'File already exists' });
+        const defaultData = data || {
+            _meta: {
+                name: safeName,
+                version: '1.0',
+                date: new Date().toISOString().slice(0, 10),
+                source_lang: 'de',
+                target_lang: 'en',
+                status: 'draft',
+            },
+            terms: [],
+        };
+        const yamlStr = yaml.dump(defaultData, {
+            indent: 2,
+            lineWidth: 120,
+            noRefs: true,
+            sortKeys: false,
+        });
+        fs.writeFileSync(filePath, yamlStr, 'utf8');
+        res.json({ success: true, filename: fullName });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Delete a terminology file
+app.delete('/api/terminology/:filename', (req, res) => {
+    try {
+        const filePath = path.join(TERMINOLOGY_DIR, req.params.filename);
+        if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'File not found' });
         fs.unlinkSync(filePath);
         res.json({ success: true });
     } catch (err) {

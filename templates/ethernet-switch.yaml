@@ -134,9 +134,10 @@ product:
       poe_standard:
         _type: enum
         _options:
-          - "IEEE 802.3af (PoE)"
-          - "IEEE 802.3at (PoE+)"
-          - "IEEE 802.3bt (PoE++)"
+          - "IEEE 802.3af (PoE, Type 1, 15.4W)"
+          - "IEEE 802.3at (PoE+, Type 2, 30W)"
+          - "IEEE 802.3bt (PoE++, Type 3, 60W)"
+          - "IEEE 802.3bt (PoE++, Type 4, 90W)"
         _label: "PoE-Standard"
         _visible_if:
           field: poe
@@ -329,8 +330,8 @@ product:
     _suggestions:
       - "CE"
       - "FCC Class A"
-      - "UL 62368-1"
-      - "IEC 61850-3"
+      - "EN IEC 62368-1"
+      - "EN IEC 61850-3"
       - "IEEE 1613"
       - "EN 50121-4 (Railway)"
 
