@@ -209,8 +209,17 @@ header .build-number {
 /* === Main === */
 #editor-area {
     flex: 1;
-    overflow-y: auto;
+    overflow: hidden;
     padding: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+#editor {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
 }
 
 #empty-state {
@@ -230,6 +239,7 @@ header .build-number {
     margin-bottom: 12px;
     flex-wrap: wrap;
     gap: 8px;
+    flex-shrink: 0;
 }
 
 .editor-toolbar h2 {
@@ -269,8 +279,9 @@ header .build-number {
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    margin-bottom: 16px;
+    margin-bottom: 0;
     font-size: var(--font-sm);
+    flex-shrink: 0;
 }
 
 .meta-bar label {
@@ -325,8 +336,36 @@ button {
     color: var(--white);
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
     background: var(--primary-hover);
+}
+
+.btn-primary:disabled {
+    background: var(--gray-300);
+    color: var(--text-muted);
+    cursor: default;
+    opacity: 0.7;
+}
+
+.btn-primary.has-changes {
+    background: var(--primary);
+    animation: pulse-save 1.5s ease-in-out infinite;
+}
+
+.btn-primary.has-changes:hover {
+    background: var(--primary-hover);
+}
+
+@keyframes pulse-save {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px rgba(59, 130, 246, 0);
+    }
 }
 
 .btn-secondary {
@@ -368,14 +407,22 @@ button {
 }
 
 /* === Terminology Table === */
+#table-view {
+    flex: 1;
+    overflow: auto;
+    margin-top: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
 #table-container {
     width: 100%;
-    overflow-x: auto;
 }
 
 .term-table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
     font-size: var(--font-base);
     table-layout: fixed;
 }
@@ -392,7 +439,7 @@ button {
     position: sticky;
     top: 0;
     z-index: 10;
-    border: 1px solid #2a2a3e;
+    border-bottom: 2px solid #2a2a3e;
     white-space: nowrap;
 }
 
@@ -615,9 +662,17 @@ button {
 }
 
 /* === YAML View === */
+#yaml-view {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
 #yaml-raw {
     width: 100%;
-    min-height: calc(100vh - 260px);
+    flex: 1;
     padding: 16px;
     font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
     font-size: var(--font-base);
@@ -626,7 +681,7 @@ button {
     color: var(--sidebar-text);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    resize: vertical;
+    resize: none;
     tab-size: 2;
 }
 

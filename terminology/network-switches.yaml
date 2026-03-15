@@ -38,10 +38,10 @@ product_categories:
     target_term: Micro Switch
     domain: networking
     do_not_translate: true
-  - source_term: Desktop Switch
+  - source_term: Tischgerät
     target_term: Desktop Switch
     domain: networking
-    do_not_translate: true
+    do_not_translate: false
 ports:
   - source_term: Anschluss
     target_term: Port
@@ -72,8 +72,8 @@ ports:
     domain: networking
     do_not_translate: false
     context: Port, der wahlweise als RJ45 oder SFP genutzt werden kann
-  - source_term: RJ45
-    target_term: RJ45
+  - source_term: RJ-45
+    target_term: RJ-45
     domain: networking
     do_not_translate: true
 fiber_optic:

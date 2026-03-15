@@ -3,6 +3,7 @@ let currentFile = null;
 let currentData = null;
 let isYamlView = false;
 let searchFilter = '';
+let isDirty = false;
 
 // Domain suggestions for the dropdown
 const DOMAIN_OPTIONS = [
@@ -51,6 +52,22 @@ function escapeHtml(str) {
 function autoResize(el) {
     el.style.height = 'auto';
     el.style.height = el.scrollHeight + 'px';
+}
+
+function markDirty() {
+    if (!isDirty) {
+        isDirty = true;
+        btnSave.textContent = 'Save Changes';
+        btnSave.classList.add('has-changes');
+        btnSave.disabled = false;
+    }
+}
+
+function markClean() {
+    isDirty = false;
+    btnSave.textContent = 'No Changes';
+    btnSave.classList.remove('has-changes');
+    btnSave.disabled = true;
 }
 
 // ─── API helpers ─────────────────────────────────────────────────────────────
@@ -196,6 +213,7 @@ async function loadFile(filename) {
 
     renderTable();
     yamlRaw.value = result.raw;
+    markClean();
 
     document.querySelectorAll('#file-list li').forEach(li => {
         li.classList.toggle('active', li.dataset.filename === filename);
@@ -275,13 +293,22 @@ function renderTable() {
     tableContainer.querySelectorAll('.chk-dnt').forEach(chk => {
         chk.addEventListener('change', () => {
             chk.closest('tr').classList.toggle('dnt-true', chk.checked);
+            markDirty();
         });
     });
 
     // Auto-expand textareas
     tableContainer.querySelectorAll('textarea.auto-expand').forEach(ta => {
         autoResize(ta);
-        ta.addEventListener('input', () => autoResize(ta));
+        ta.addEventListener('input', () => {
+            autoResize(ta);
+            markDirty();
+        });
+    });
+
+    // Wire up domain selects
+    tableContainer.querySelectorAll('.sel-domain').forEach(sel => {
+        sel.addEventListener('change', () => markDirty());
     });
 
     // Apply search filter if active
@@ -492,6 +519,7 @@ btnSave.addEventListener('click', async () => {
             if (result.error) return showToast(result.error, 'error');
             showToast('Saved!');
             yamlRaw.value = result.raw || yamlRaw.value;
+            markClean();
             loadFileList();
             return;
         } catch (e) {
@@ -513,6 +541,7 @@ btnSave.addEventListener('click', async () => {
     currentData = dataToSave;
     yamlRaw.value = result.raw || '';
     editorTitle.textContent = getCurrentMeta().name || currentFile;
+    markClean();
     loadFileList();
 });
 
@@ -608,6 +637,13 @@ document.addEventListener('keydown', (e) => {
         }
     }
 });
+
+// ─── Track changes on meta bar & YAML textarea ──────────────────────────────
+[metaName, metaSourceLang, metaTargetLang, metaVersion].forEach(el => {
+    el.addEventListener('input', () => markDirty());
+});
+metaStatus.addEventListener('change', () => markDirty());
+yamlRaw.addEventListener('input', () => markDirty());
 
 // ─── Init ────────────────────────────────────────────────────────────────────
 async function init() {
